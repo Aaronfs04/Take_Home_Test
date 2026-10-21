@@ -41,7 +41,6 @@
   letter-spacing: 0.02em;
 }
 
-/*buat animasi dari judul sama subjudul bagian atas*/
 @keyframes fadeInShift {
   0% {
     opacity: 0;
@@ -100,7 +99,6 @@
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
 }
 
-/*animasi tombol (habis animasi judul sama sub judul masuk)*/
 @keyframes fadeInButtons {
   0% {
     opacity: 0;

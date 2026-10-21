@@ -89,7 +89,6 @@
   background-color: #f8fafc;
 }
 
-/* Hilangkan panah stepper/spinner naik-turun angka */
 .input::-webkit-outer-spin-button,
 .input::-webkit-inner-spin-button {
   -webkit-appearance: none;

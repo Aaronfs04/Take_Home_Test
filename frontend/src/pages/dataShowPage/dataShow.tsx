@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import styles from './dataShow.module.css';
 
-// 1. Tipe Data Transaksi
 interface Transaction {
   id: number;
   productID: string;
@@ -57,7 +56,7 @@ const DataShow: React.FC<DataShowProps> = ({ onBack }) => {
   return (
     <div className={styles.container}>
       <header className={styles.topBar}>
-        <button onClick={onBack} className={styles.backBtn}>← Kembali ke Beranda</button>
+        <button onClick={onBack} className={styles.backBtn}>Kembali ke Beranda</button>
       </header>
 
       <section className={styles.header}>

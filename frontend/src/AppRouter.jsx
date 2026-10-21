@@ -1,4 +1,5 @@
-//page terakhir untuk perpindahan page sebelum dimasukan ke app.jsx
+//route perpindahan page terakhir sebelum masuk ke app.jsx
+
 import { useState } from 'react';
 import Hero from './pages/heroPage/hero';
 import DataShow from './pages/dataShowPage/dataShow';

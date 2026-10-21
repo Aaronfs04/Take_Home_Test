@@ -23,7 +23,6 @@ const DetailPage: React.FC<DetailProps> = ({ onBack }) => {
   const [selectedItem, setSelectedItem] = useState<Transaction | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Ambil daftar transaksi dari API
   useEffect(() => {
     fetch('http://localhost:5000/api/transactions')
       .then((res) => res.json())
@@ -31,18 +30,15 @@ const DetailPage: React.FC<DetailProps> = ({ onBack }) => {
       .catch((err) => console.error('Gagal mengambil data:', err));
   }, []);
 
-  // Format mata uang Rupiah
   const formatRupiah = (val: number): string => {
     return `Rp ${Number(val || 0).toLocaleString('id-ID')}`;
   };
 
-  // Pilih item dari baris tabel
   const handleSelectTransaction = (item: Transaction) => {
     setSelectedItem(item);
     setErrorMsg(null);
   };
 
-  // Cari detail berdasarkan ID dari API backend (GET /api/transactions/:id)
   const handleSearchSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchId.trim()) return;
@@ -56,10 +52,10 @@ const DetailPage: React.FC<DetailProps> = ({ onBack }) => {
         setSelectedItem(result.data);
       } else {
         setSelectedItem(null);
-        setErrorMsg(`Transaksi dengan ID #${searchId} tidak ditemukan.`);
+        setErrorMsg(`Transaksi dengan ID #${searchId} tidak ditemukan`);
       }
     } catch (err) {
-      setErrorMsg('Gagal terhubung ke backend server.');
+      setErrorMsg('Gagal terhubung ke backend server');
     }
   };
 
@@ -67,22 +63,21 @@ const DetailPage: React.FC<DetailProps> = ({ onBack }) => {
     <div className={styles.container}>
       <div className={styles.topBar}>
         <button onClick={onBack} className={styles.backBtn}>
-          ← Kembali ke Beranda
+          Kembali ke Beranda
         </button>
       </div>
 
       <div className={styles.header}>
         <h1 className={styles.title}>Detail Data Transaksi</h1>
         <p className={styles.subtitle}>
-          Ketik ID transaksi atau klik langsung pada baris tabel di bawah untuk melihat rincian lengkap transaksi.
+          Ketik ID transaksi atau klik langsung pada baris tabel di bawah untuk melihat rincian lengkap transaksi
         </p>
       </div>
 
-      {/* Input Pencarian ID */}
       <form onSubmit={handleSearchSubmit} className={styles.searchBox}>
         <input
           type="text"
-          placeholder="Ketik ID Transaksi yang ingin dilihat detailnya (Contoh: 1372)..."
+          placeholder="Ketik ID Transaksi yang ingin dilihat detailnya Contoh 1372"
           value={searchId}
           onChange={(e) => setSearchId(e.target.value.replace(/[^0-9]/g, ''))}
           className={styles.searchInput}
@@ -94,7 +89,6 @@ const DetailPage: React.FC<DetailProps> = ({ onBack }) => {
 
       {errorMsg && <div className={styles.alertError}>{errorMsg}</div>}
 
-      {/* Tampilan Kartu Detail Transaksi (Muncul saat ada item terpilih) */}
       {selectedItem && (
         <div className={styles.detailCard}>
           <div className={styles.detailCardHeader}>
@@ -105,7 +99,7 @@ const DetailPage: React.FC<DetailProps> = ({ onBack }) => {
               </span>
             </div>
             <button onClick={() => setSelectedItem(null)} className={styles.closeBtn}>
-              ✕ Tutup
+              Tutup
             </button>
           </div>
 
@@ -155,7 +149,6 @@ const DetailPage: React.FC<DetailProps> = ({ onBack }) => {
         </div>
       )}
 
-      {/* Tabel Transaksi yang Bisa Diklik */}
       <div className={styles.tableCard}>
         <div className={styles.tableResponsive}>
           <table className={styles.table}>
@@ -215,4 +208,3 @@ const DetailPage: React.FC<DetailProps> = ({ onBack }) => {
 };
 
 export default DetailPage;
-

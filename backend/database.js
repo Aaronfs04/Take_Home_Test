@@ -1,3 +1,5 @@
+//buat database
+
 const { DatabaseSync } = require("node:sqlite");
 const path = require("path");
 const fs = require("fs");
@@ -54,7 +56,7 @@ function initDatabase() {
       }
     }
   } else {
-    console.log(`ℹDatabase sudah siap ${result.count} transaksi.`);
+    console.log(`Database sudah siap ${result.count} transaksi`);
   }
 }
 initDatabase();

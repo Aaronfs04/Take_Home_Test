@@ -22,7 +22,7 @@ const InputData: React.FC<InputProps> = ({ onBack, onSuccess }) => {
     setMessage(null);
 
     if (!productID || !productName || !amount || !customerName) {
-      setMessage({ text: 'Mohon isi semua field yang bertanda bintang (*)', type: 'error' });
+      setMessage({ text: 'Mohon lengkapi semua data yang wajib diisi', type: 'error' });
       return;
     }
 
@@ -66,7 +66,7 @@ const InputData: React.FC<InputProps> = ({ onBack, onSuccess }) => {
         setMessage({ text: data.message || 'Gagal menyimpan transaksi', type: 'error' });
       }
     } catch (err: any) {
-      setMessage({ text: 'Tidak dapat terhubung ke server backend.', type: 'error' });
+      setMessage({ text: 'Tidak dapat terhubung ke server backend', type: 'error' });
     } finally {
       setLoading(false);
     }
@@ -74,10 +74,9 @@ const InputData: React.FC<InputProps> = ({ onBack, onSuccess }) => {
 
   return (
     <div className={styles.container}>
-      {/* Tombol Kembali Rata Kiri */}
       <div className={styles.topBar}>
         <button onClick={onBack} className={styles.backBtn}>
-          ← Kembali ke Beranda
+          Kembali ke Beranda
         </button>
       </div>
 

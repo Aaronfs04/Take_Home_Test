@@ -22,7 +22,6 @@ const EditPage: React.FC<EditProps> = ({ onBack }) => {
   const [searchId, setSearchId] = useState('');
   const [selectedItem, setSelectedItem] = useState<Transaction | null>(null);
 
-  // Form states untuk data yang sedang diedit
   const [productID, setProductID] = useState('');
   const [productName, setProductName] = useState('');
   const [amount, setAmount] = useState('');
@@ -33,7 +32,6 @@ const EditPage: React.FC<EditProps> = ({ onBack }) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
-  // Memuat data dari database
   const loadTransactions = () => {
     fetch('http://localhost:5000/api/transactions')
       .then((res) => res.json())
@@ -45,7 +43,6 @@ const EditPage: React.FC<EditProps> = ({ onBack }) => {
     loadTransactions();
   }, []);
 
-  // Ketika baris tabel diklik atau ID dipilih
   const handleSelectTransaction = (item: Transaction) => {
     setSelectedItem(item);
     setProductID(item.productID);
@@ -57,18 +54,16 @@ const EditPage: React.FC<EditProps> = ({ onBack }) => {
     setMessage(null);
   };
 
-  // Cari ID jika user mengetik di search bar
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const found = transactions.find((t) => t.id.toString() === searchId.trim());
     if (found) {
       handleSelectTransaction(found);
     } else {
-      setMessage({ text: `Transaksi dengan ID #${searchId} tidak ditemukan.`, type: 'error' });
+      setMessage({ text: `Transaksi dengan ID #${searchId} tidak ditemukan`, type: 'error' });
     }
   };
 
-  // Simpan perubahan ke API (PUT /api/transactions/:id)
   const handleSaveEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedItem) return;
@@ -95,22 +90,21 @@ const EditPage: React.FC<EditProps> = ({ onBack }) => {
       const result = await res.json();
 
       if (res.ok) {
-        setMessage({ text: `🎉 Transaksi #${selectedItem.id} berhasil diperbarui di Database!`, type: 'success' });
+        setMessage({ text: `Transaksi ID #${selectedItem.id} berhasil diperbarui di database`, type: 'success' });
         loadTransactions();
       } else {
-        setMessage({ text: result.message || 'Gagal mengubah data.', type: 'error' });
+        setMessage({ text: result.message || 'Gagal mengubah data', type: 'error' });
       }
     } catch (err) {
-      setMessage({ text: 'Terjadi kesalahan koneksi ke backend.', type: 'error' });
+      setMessage({ text: 'Terjadi kesalahan koneksi ke backend', type: 'error' });
     } finally {
       setLoading(false);
     }
   };
 
-  // Hapus transaksi (DELETE /api/transactions/:id)
   const handleDeleteTransaction = async (id: number) => {
     const isConfirm = window.confirm(
-      `Apakah Anda yakin ingin menghapus transaksi #${id}? Data yang dihapus tidak dapat dipulihkan.`
+      `Apakah Anda yakin ingin menghapus transaksi ID #${id}? Data yang dihapus tidak dapat dipulihkan`
     );
     if (!isConfirm) return;
 
@@ -121,16 +115,16 @@ const EditPage: React.FC<EditProps> = ({ onBack }) => {
       const data = await res.json();
 
       if (res.ok) {
-        setMessage({ text: `🗑️ Transaksi #${id} berhasil dihapus dari Database!`, type: 'success' });
+        setMessage({ text: `Transaksi ID #${id} berhasil dihapus dari database`, type: 'success' });
         if (selectedItem?.id === id) {
           setSelectedItem(null);
         }
         loadTransactions();
       } else {
-        setMessage({ text: data.message || 'Gagal menghapus data.', type: 'error' });
+        setMessage({ text: data.message || 'Gagal menghapus data', type: 'error' });
       }
     } catch (err) {
-      setMessage({ text: 'Gagal terhubung ke backend server.', type: 'error' });
+      setMessage({ text: 'Gagal terhubung ke backend server', type: 'error' });
     }
   };
 
@@ -138,22 +132,21 @@ const EditPage: React.FC<EditProps> = ({ onBack }) => {
     <div className={styles.container}>
       <div className={styles.topBar}>
         <button onClick={onBack} className={styles.backBtn}>
-          ← Kembali ke Beranda
+          Kembali ke Beranda
         </button>
       </div>
 
       <div className={styles.header}>
         <h1 className={styles.title}>Edit & Kelola Data Transaksi</h1>
         <p className={styles.subtitle}>
-          Ketik nomor ID transaksi atau klik langsung pada baris tabel di bawah untuk mengedit atau menghapus data.
+          Ketik nomor ID transaksi atau klik langsung pada baris tabel di bawah untuk mengedit atau menghapus data
         </p>
       </div>
 
-      {/* Input Pencarian ID */}
       <form onSubmit={handleSearchSubmit} className={styles.searchBox}>
         <input
           type="text"
-          placeholder="Ketik ID Transaksi yang ingin diedit/dihapus (Contoh: 1372)..."
+          placeholder="Ketik ID Transaksi yang ingin diedit atau dihapus Contoh 1372"
           value={searchId}
           onChange={(e) => setSearchId(e.target.value.replace(/[^0-9]/g, ''))}
           className={styles.searchInput}
@@ -169,15 +162,14 @@ const EditPage: React.FC<EditProps> = ({ onBack }) => {
         </div>
       )}
 
-      {/* Form Edit Terbuka jika Ada Item yang Dipilih */}
       {selectedItem && (
         <div className={styles.editCard}>
           <div className={styles.editCardHeader}>
             <div className={styles.editCardTitle}>
-              Mengedit Transaksi: <strong>#{selectedItem.id}</strong>
+              Mengedit Transaksi ID: <strong>#{selectedItem.id}</strong>
             </div>
             <button onClick={() => setSelectedItem(null)} className={styles.cancelBtn} style={{ padding: '0.4rem 0.8rem' }}>
-              ✕ Tutup Form
+              Tutup Form
             </button>
           </div>
 
@@ -260,7 +252,7 @@ const EditPage: React.FC<EditProps> = ({ onBack }) => {
                 onClick={() => handleDeleteTransaction(selectedItem.id)}
                 className={styles.deleteBtn}
               >
-                🗑️ Hapus Transaksi Ini
+                Hapus Transaksi Ini
               </button>
               <button type="button" onClick={() => setSelectedItem(null)} className={styles.cancelBtn}>
                 Batal
@@ -270,7 +262,6 @@ const EditPage: React.FC<EditProps> = ({ onBack }) => {
         </div>
       )}
 
-      {/* Tabel Data Transaksi (Bisa Diklik & Ada Tombol Hapus) */}
       <div className={styles.tableCard}>
         <div className={styles.tableResponsive}>
           <table className={styles.table}>

@@ -7,7 +7,7 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 
-//ngambil data sama di grouping
+//buat ngambil data
 app.get("/api/transactions", (req, res) => {
   try {
     const stmt = db.prepare(
@@ -24,7 +24,7 @@ app.get("/api/transactions", (req, res) => {
   }
 });
 
-//ngambil detail transaksi
+//ngambil data
 app.get("/api/transactions/:id", (req, res) => {
   try {
     const { id } = req.params;
@@ -43,7 +43,7 @@ app.get("/api/transactions/:id", (req, res) => {
   }
 });
 
-//nambah data baru
+//buat data baru
 app.post("/api/transactions", (req, res) => {
   try {
     const {
@@ -102,7 +102,7 @@ app.post("/api/transactions", (req, res) => {
   }
 });
 
-//mengedit data yang ada
+//edit data yang ada
 app.put("/api/transactions/:id", (req, res) => {
   try {
     const { id } = req.params;
@@ -157,7 +157,7 @@ app.put("/api/transactions/:id", (req, res) => {
   }
 });
 
-//buat hapus transaksi (dimasukin ke page edit)
+//hapus data
 app.delete("/api/transactions/:id", (req, res) => {
   try {
     const { id } = req.params;
@@ -166,7 +166,7 @@ app.delete("/api/transactions/:id", (req, res) => {
 
     res.json({
       status: "success",
-      message: `Transaksi ID ${id} berhasil dihapus`,
+      message: `Transaksi ID #${id} berhasil dihapus`,
     });
   } catch (err) {
     res.status(500).json({ status: "error", message: err.message });

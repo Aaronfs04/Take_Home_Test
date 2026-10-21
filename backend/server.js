@@ -1,3 +1,5 @@
+//pembuatan API (formatnya REST API)
+
 const express = require("express");
 const cors = require("cors");
 const db = require("./database");
